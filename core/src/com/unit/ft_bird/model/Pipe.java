@@ -1,0 +1,48 @@
+package com.unit.ft_bird.model;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.unit.ft_bird.view.FtBird;
+
+public class Pipe implements DrawableObject {
+	private float								elapsedTime = 0;
+	private Animation<TextureAtlas.AtlasRegion>	pipe;
+	private Vector2								position;
+	private final int							PIPE_WIDTH = Gdx.app.getGraphics().getWidth() / 10;
+	private final int							PIPE_HEIGHT = Gdx.app.getGraphics().getHeight() / 2;
+	private Rectangle							collisionRectangle;
+
+	public Pipe(int x, int y, boolean isUp) {
+		pipe = isUp ? PipeFactory.getPipeUp() : PipeFactory.getPipeDown();
+		position = new Vector2(x, y);
+		collisionRectangle = new Rectangle();
+	}
+
+	public void draw() {
+		elapsedTime += Gdx.graphics.getDeltaTime();
+		FtBird.batch.draw(
+				pipe.getKeyFrame(elapsedTime, true),
+				position.x,
+				position.y,
+				PIPE_WIDTH,
+				PIPE_HEIGHT
+		);
+	}
+
+	public void update() {
+		if ((position.x -= 3) < -PIPE_WIDTH)
+			position.x = Gdx.app.getGraphics().getWidth() + Gdx.app.getGraphics().getWidth() / 3;
+		collisionRectangle.set(position.x, position.y, PIPE_WIDTH, PIPE_HEIGHT);
+	}
+
+	public boolean checkCollision(Circle bird) {
+		return Intersector.overlaps(bird, collisionRectangle);
+	}
+
+	public void dispose() {}
+}

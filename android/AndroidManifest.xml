@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unit.ft_bird" >
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="28" />
-
+    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -12,7 +11,7 @@
         <activity
             android:name="com.unit.ft_bird.AndroidLauncher"
             android:label="@string/app_name" 
-            android:screenOrientation="landscape"
+            android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

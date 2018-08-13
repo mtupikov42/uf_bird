@@ -1,6 +1,5 @@
 package com.unit.ft_bird.controller;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.unit.ft_bird.model.Bird;
 import com.unit.ft_bird.model.GameMode;

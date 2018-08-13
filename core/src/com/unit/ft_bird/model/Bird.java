@@ -38,7 +38,7 @@ public class Bird implements DrawableObject {
 		velocity.x = 0;
 		velocity.y = 0;
 		acceleration.x = 0;
-		acceleration.y = 1;
+		acceleration.y = 1.2f;
 		rotation = 0;
 	}
 
@@ -89,7 +89,7 @@ public class Bird implements DrawableObject {
 	}
 
 	public void onClick() {
-		velocity.y = -20;
+		velocity.y = -24;
 	}
 
 	public void dispose() {

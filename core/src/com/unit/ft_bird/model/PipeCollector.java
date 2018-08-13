@@ -1,8 +1,6 @@
 package com.unit.ft_bird.model;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 
 import java.util.ArrayList;
@@ -23,13 +21,17 @@ public class PipeCollector  implements DrawableObject {
 	}
 
 	public void update() {
-		for (Pipe pipe : pipes)
-			pipe.update();
+		for (int i = 0; i < pipes.size(); i++) {
+			if (i % 2 == 0)
+				pipes.get(i).update();
+			else
+				pipes.get(i).update(pipes.get(i - 1));
+		}
 	}
 
 	public boolean checkCollision(Circle bird) {
 		for (Pipe pipe : pipes)
-			if (pipe.checkCollision(bird) || (bird.y <= Gdx.graphics.getHeight() / 4))
+			if (pipe.checkCollision(bird) || (bird.y <= Gdx.graphics.getHeight() / 4) || (bird.y > Gdx.graphics.getHeight()))
 				return true;
 		return false;
 	}

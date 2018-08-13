@@ -35,7 +35,7 @@ public class Background implements DrawableObject {
 		if (FtBird.gameMode != GameMode.GAME)
 			floorAnimation.setFrameDuration(Float.MAX_VALUE);
 		else
-			floorAnimation.setFrameDuration(1/9f);
+			floorAnimation.setFrameDuration(1/18f);
 		FtBird.batch.draw(
 				floorAnimation.getKeyFrame(elapsedTime, true),
 				0,

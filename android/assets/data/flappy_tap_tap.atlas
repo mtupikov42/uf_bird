@@ -1,0 +1,11 @@
+flappy_sprites.png
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+0001
+    rotate: false
+    xy: 151, 66
+    size: 57, 49
+    orig: 57, 49
+    offset: 0, 0
+    index: -1

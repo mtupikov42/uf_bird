@@ -30,22 +30,61 @@ public class Controller implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (FtBird.gameMode == GameMode.GAME) {
 			game.getFlappyBird().onClick();
-		} else if (FtBird.gameMode == GameMode.MENU) {
+		} else if (FtBird.gameMode == GameMode.MAIN_MENU) {
 			if (game.getSkinsButton().isClicked(screenX, screenY))
 				FtBird.gameMode = GameMode.CHOOSE_SKIN;
+			else if (game.getMenuButton().isClicked(screenX, screenY))
+				FtBird.gameMode = GameMode.MENU;
 			else
 				FtBird.gameMode = GameMode.GAME;
 		} else if (FtBird.gameMode == GameMode.GAMEOVER) {
 			if (game.getPlayButton().isClicked(screenX, screenY)) {
-				FtBird.gameMode = GameMode.MENU;
+				FtBird.gameMode = GameMode.MAIN_MENU;
 				game.getFlappyBird().setDefault();
 				game.getPipeCollector().setDefault();
 			}
 		} else if (FtBird.gameMode == GameMode.CHOOSE_SKIN) {
 			if (game.getOkButton().isClicked(screenX, screenY))
-				FtBird.gameMode = GameMode.MENU;
+				FtBird.gameMode = GameMode.MAIN_MENU;
+			else {
+				if (game.getArrowLeftButton().isClicked(screenX, screenY)) {
+					if (game.getScroller().getChosenItem() > 0)
+						game.getScroller().decChosenItem();
+				} else if (game.getArrowRightButton().isClicked(screenX, screenY)) {
+					if (game.getScroller().getChosenItem() < game.getScroller().getScrollerSize() - 1)
+						game.getScroller().incChosenItem();
+				}
+				changeSkin();
+			}
+
+		} else if (FtBird.gameMode == GameMode.MENU) {
+			if (game.getPlayButton().isClicked(screenX, screenY)) {
+				FtBird.gameMode = GameMode.MAIN_MENU;
+				game.getFlappyBird().setDefault();
+				game.getPipeCollector().setDefault();
+			}
 		}
 		return true;
+	}
+
+	private void	changeSkin() {
+		switch (game.getScroller().getChosenItem()) {
+			case 0:
+				game.getFlappyBird().changeSkin("data/flappy_bird_blue_animation.atlas");
+				break;
+			case 1:
+				game.getFlappyBird().changeSkin("data/flappy_bird_animation.atlas");
+				break;
+			case 2:
+				game.getFlappyBird().changeSkin("data/flappy_bird_red_animation.atlas");
+				break;
+			case 3:
+				game.getFlappyBird().changeSkin("data/abodnar_animation.atlas");
+				break;
+			case 4:
+				game.getFlappyBird().changeSkin("data/unit_animation.atlas");
+				break;
+		}
 	}
 
 	@Override

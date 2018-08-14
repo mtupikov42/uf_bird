@@ -31,6 +31,25 @@ public class Image implements DrawableObject {
 		);
 	}
 
+	public void drawScale(float scale) {
+		FtBird.batch.draw(
+				image,
+				position.x,
+				position.y,
+				imageWidth,
+				imageHeight,
+				imageWidth,
+				imageHeight,
+				scale,
+				scale,
+				0
+		);
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+
 	public int getImageWidth() {
 		return imageWidth;
 	}

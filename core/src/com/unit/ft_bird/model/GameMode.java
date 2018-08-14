@@ -1,9 +1,10 @@
 package com.unit.ft_bird.model;
 
 public enum GameMode {
-	MENU,
+	MAIN_MENU,
 	GAME,
 	GAMEOVER,
 	SCORE_MENU,
-	CHOOSE_SKIN
+	CHOOSE_SKIN,
+	MENU
 }

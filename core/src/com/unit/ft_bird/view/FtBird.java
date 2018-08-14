@@ -12,6 +12,7 @@ import com.unit.ft_bird.model.Button;
 import com.unit.ft_bird.model.GameMode;
 import com.unit.ft_bird.model.Image;
 import com.unit.ft_bird.model.PipeCollector;
+import com.unit.ft_bird.model.SkinScroller;
 
 public class FtBird extends ApplicationAdapter {
 	static public SpriteBatch	batch;
@@ -27,11 +28,9 @@ public class FtBird extends ApplicationAdapter {
 								arrowRightButton,
 								arrowLeftButton;
 	private Image				gameOverImage,
-								skinChooserImage,
-								fbYellowImage,
-								fbBlueImage,
-								fbRedImage;
+								skinChooserImage;
 	private BirdFont			font;
+	private SkinScroller		scroller;
 	public static GameMode		gameMode;
 	public static int			score = 0;
 
@@ -98,44 +97,67 @@ public class FtBird extends ApplicationAdapter {
 				skinChooserImage.getPosition().x + skinChooserImage.getImageWidth() / 2 - Gdx.graphics.getWidth() / 12,
 				skinChooserImage.getPosition().y - skinChooserImage.getImageHeight() / 3
 		);
-		arrowRightButton = new Button(
-				"data/arrow_right_button.atlas",
+		arrowLeftButton = new Button(
+				"data/arrow_left_button.atlas",
 				Gdx.graphics.getWidth() / 30,
 				Gdx.graphics.getHeight() / 20,
 				skinChooserImage.getPosition().x + 20,
 				skinChooserImage.getPosition().y + skinChooserImage.getImageHeight() / 2 - Gdx.graphics.getHeight() / 40
 		);
-		arrowLeftButton = new Button(
-				"data/arrow_left_button.atlas",
+		arrowRightButton = new Button(
+				"data/arrow_right_button.atlas",
 				Gdx.graphics.getWidth() / 30,
 				Gdx.graphics.getHeight() / 20,
 				skinChooserImage.getPosition().x + skinChooserImage.getImageWidth() - Gdx.graphics.getWidth() / 30 - 20,
 				skinChooserImage.getPosition().y + skinChooserImage.getImageHeight() / 2 - Gdx.graphics.getHeight() / 40
 		);
-		fbYellowImage = new Image(
+		Image fbYellowImage = new Image(
 				"data/flappy_bird_animation.atlas",
 				Gdx.app.getGraphics().getWidth() / 10,
 				Gdx.app.getGraphics().getWidth() / 14,
-				skinChooserImage.getPosition().x + 50,
-				skinChooserImage.getPosition().y + skinChooserImage.getImageHeight() / 2 - Gdx.graphics.getHeight() / 28
+				0,
+				0
 		);
-		fbBlueImage = new Image(
+		Image fbBlueImage = new Image(
 				"data/flappy_bird_blue_animation.atlas",
 				Gdx.app.getGraphics().getWidth() / 10,
 				Gdx.app.getGraphics().getWidth() / 14,
-				skinChooserImage.getPosition().x + 200,
-				skinChooserImage.getPosition().y + skinChooserImage.getImageHeight() / 2 - Gdx.graphics.getHeight() / 28
+				0,
+				0
 		);
-		fbRedImage = new Image(
+		Image fbRedImage = new Image(
 				"data/flappy_bird_red_animation.atlas",
 				Gdx.app.getGraphics().getWidth() / 10,
 				Gdx.app.getGraphics().getWidth() / 14,
-				skinChooserImage.getPosition().x + 300,
-				skinChooserImage.getPosition().y + skinChooserImage.getImageHeight() / 2 - Gdx.graphics.getHeight() / 28
+				0,
+				0
 		);
-
+		Image fbAbodnarImage = new Image(
+				"data/abodnar_animation.atlas",
+				Gdx.app.getGraphics().getWidth() / 10,
+				Gdx.app.getGraphics().getWidth() / 14,
+				0,
+				0
+		);
+		Image fbUnitImage = new Image(
+				"data/unit_animation.atlas",
+				Gdx.app.getGraphics().getWidth() / 10,
+				Gdx.app.getGraphics().getWidth() / 14,
+				0,
+				0
+		);
+		scroller = new SkinScroller(
+				skinChooserImage.getPosition().x + arrowLeftButton.getButtonWidth() + Gdx.graphics.getWidth() / 15,
+				skinChooserImage.getPosition().y + skinChooserImage.getImageHeight() / 2 - Gdx.graphics.getHeight() / 28,
+				100
+		);
+		scroller.add(fbBlueImage);
+		scroller.add(fbYellowImage);
+		scroller.add(fbRedImage);
+		scroller.add(fbAbodnarImage);
+		scroller.add(fbUnitImage);
 		Gdx.input.setInputProcessor(new Controller(this));
-		gameMode = GameMode.MENU;
+		gameMode = GameMode.MAIN_MENU;
 	}
 
 	@Override
@@ -144,8 +166,8 @@ public class FtBird extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		switch (gameMode) {
-			case MENU:
-				renderMenu();
+			case MAIN_MENU:
+				renderMainMenu();
 				break;
 			case GAME:
 				renderGame();
@@ -156,11 +178,14 @@ public class FtBird extends ApplicationAdapter {
 			case CHOOSE_SKIN:
 				renderChooseSkin();
 				break;
+			case MENU:
+				renderMenu();
+				break;
 		}
 		batch.end();
 	}
 
-	private void renderMenu() {
+	private void renderMainMenu() {
 		gameBG.draw();
 		tap_tap.draw();
 		pipeCollector.draw();
@@ -212,9 +237,14 @@ public class FtBird extends ApplicationAdapter {
 		okButton.draw();
 		arrowLeftButton.draw();
 		arrowRightButton.draw();
-		fbYellowImage.draw();
-		fbBlueImage.draw();
-		fbRedImage.draw();
+		scroller.draw();
+	}
+
+	private void renderMenu() {
+		gameBG.draw();
+		gameBG.drawFloor();
+		playButton.draw();
+		scoreButton.draw();
 	}
 
 	@Override
@@ -234,9 +264,7 @@ public class FtBird extends ApplicationAdapter {
 		arrowLeftButton.dispose();
 		arrowRightButton.dispose();
 		scoreButton.dispose();
-		fbYellowImage.dispose();
-		fbBlueImage.dispose();
-		fbRedImage.dispose();
+		scroller.dispose();
 	}
 
 	public Bird getFlappyBird() {
@@ -273,5 +301,9 @@ public class FtBird extends ApplicationAdapter {
 
 	public Button getArrowLeftButton() {
 		return arrowLeftButton;
+	}
+
+	public SkinScroller getScroller() {
+		return scroller;
 	}
 }

@@ -4,8 +4,8 @@ filter: Nearest, Nearest
 repeat: none
 0001
     rotate: false
-    xy: 150, 8
-    size: 7, 12
-    orig: 7, 12
+    xy: 164, 329
+    size: 17, 12
+    orig: 17, 12
     offset: 0, 0
     index: -1

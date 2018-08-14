@@ -59,5 +59,8 @@ public class PipeCollector  implements DrawableObject {
 	}
 
 	@Override
-	public void dispose() {}
+	public void dispose() {
+		for (Pipe pipe : pipes)
+			pipe.dispose();
+	}
 }

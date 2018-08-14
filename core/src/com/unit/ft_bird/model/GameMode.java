@@ -4,5 +4,6 @@ public enum GameMode {
 	MENU,
 	GAME,
 	GAMEOVER,
-	SCORE_MENU
+	SCORE_MENU,
+	CHOOSE_SKIN
 }

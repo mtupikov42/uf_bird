@@ -26,7 +26,7 @@ public class Bird implements DrawableObject {
 				START_X,
 				START_Y
 		);
-		velocity = new Vector2(0, 0);
+		velocity = new Vector2(0, -24);
 		acceleration = new Vector2(0, 1);
 		rotation = 0;
 		collisionCircle = new Circle();
@@ -36,7 +36,7 @@ public class Bird implements DrawableObject {
 		position.x = START_X;
 		position.y = START_Y;
 		velocity.x = 0;
-		velocity.y = 0;
+		velocity.y = -24;
 		acceleration.x = 0;
 		acceleration.y = 1.2f;
 		rotation = 0;
@@ -78,6 +78,12 @@ public class Bird implements DrawableObject {
 			}
 		}
 		collisionCircle.set(position.x + BIRD_WIDTH / 2, position.y + BIRD_HEIGHT / 2, BIRD_WIDTH / 2);
+	}
+
+	public void changeSkin(String pathToAtlas) {
+		birdAnimAtlas.dispose();
+		birdAnimAtlas = new TextureAtlas(Gdx.files.internal(pathToAtlas));
+		birdAnimation = new Animation<TextureAtlas.AtlasRegion>(1/10f,  birdAnimAtlas.getRegions());
 	}
 
 	public Circle getCollisionCircle() {

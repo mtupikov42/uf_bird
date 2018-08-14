@@ -1,8 +1,10 @@
 package com.unit.ft_bird.model;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,8 +14,8 @@ import com.unit.ft_bird.view.FtBird;
 import java.util.Random;
 
 public class Pipe implements DrawableObject {
-	private float								elapsedTime = 0;
-	private Animation<TextureAtlas.AtlasRegion>	pipe;
+	private TextureAtlas						pipeAtlas;
+	private TextureRegion						pipe;
 	private Vector2								position;
 	private final int							PIPE_WIDTH = Gdx.app.getGraphics().getWidth() / 10;
 	private final int							PIPE_HEIGHT = Gdx.app.getGraphics().getHeight() / 2;
@@ -21,16 +23,19 @@ public class Pipe implements DrawableObject {
 	private boolean								isScored;
 
 	public Pipe(int x, int y, boolean isUp) {
-		pipe = isUp ? PipeFactory.getPipeUp() : PipeFactory.getPipeDown();
+		pipeAtlas = new TextureAtlas(Gdx.files.internal("data/pipes.atlas"));
+		if (isUp)
+			pipe = pipeAtlas.findRegion("0001");
+		else
+			pipe = pipeAtlas.findRegion("0002");
 		position = new Vector2(x, y);
 		collisionRectangle = new Rectangle();
 		isScored = false;
 	}
 
 	public void draw() {
-		elapsedTime += Gdx.graphics.getDeltaTime();
 		FtBird.batch.draw(
-				pipe.getKeyFrame(elapsedTime, true),
+				pipe,
 				position.x,
 				position.y,
 				PIPE_WIDTH,
@@ -65,5 +70,7 @@ public class Pipe implements DrawableObject {
 		return Intersector.overlaps(bird, collisionRectangle);
 	}
 
-	public void dispose() {}
+	public void dispose() {
+		pipeAtlas.dispose();
+	}
 }

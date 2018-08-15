@@ -37,7 +37,7 @@ public class FtBird extends ApplicationAdapter {
 	private BirdFont			font;
 	private SkinScroller		scroller;
 	public static GameMode		gameMode;
-	public static int			score = 0;
+	public static int			score = 0, maxScore;
 
 	@Override
 	public void create () {
@@ -233,8 +233,11 @@ public class FtBird extends ApplicationAdapter {
 		);
 		flappyBird.update();
 		pipeCollector.update();
-		if (pipeCollector.checkCollision(flappyBird.getCollisionCircle()))
+		if (pipeCollector.checkCollision(flappyBird.getCollisionCircle())) {
 			gameMode = GameMode.GAMEOVER;
+			BirdDB.insertScore(score);
+			maxScore = BirdDB.getMax() / 2;
+		}
 	}
 
 	private void renderGameOver() {
@@ -253,12 +256,11 @@ public class FtBird extends ApplicationAdapter {
 				Gdx.graphics.getWidth() / 500
 		);
 		font.draw(
-				Integer.toString(BirdDB.getMax() / 2),
+				Integer.toString(maxScore),
 				gameOverImage.getPosition().x + 7 * gameOverImage.getImageWidth() / 10,
 				gameOverImage.getPosition().y + 3 * gameOverImage.getImageHeight() / 10,
 				Gdx.graphics.getWidth() / 500
 		);
-		BirdDB.insertScore(score);
 	}
 
 	private void renderChooseSkin() {

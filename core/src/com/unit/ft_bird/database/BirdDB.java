@@ -43,7 +43,7 @@ public class BirdDB {
 				}
 			}
 			c.close();
-		} catch (SQLiteGdxException e) {
+		} catch (SQLiteGdxException | NoSuchMethodError e) {
 			Gdx.app.log("SQLite error: ", e.getMessage());
 		}
 		return true;

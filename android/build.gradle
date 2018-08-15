@@ -18,7 +18,7 @@ android {
     }
     defaultConfig {
         applicationId "com.unit.ft_bird"
-        minSdkVersion 9
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -133,4 +133,8 @@ idea {
             }
         }
     }
+}
+dependencies {
+    implementation fileTree(dir: '../android/libs', include: '*.jar')
+
 }

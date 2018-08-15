@@ -42,7 +42,8 @@ public class Controller implements InputProcessor {
 				FtBird.gameMode = GameMode.MAIN_MENU;
 				game.getFlappyBird().setDefault();
 				game.getPipeCollector().setDefault();
-			}
+			} else if (game.getScoreButton().isClicked(screenX, screenY))
+				FtBird.gameMode = GameMode.SCORE_MENU;
 		} else if (FtBird.gameMode == GameMode.CHOOSE_SKIN) {
 			if (game.getOkButton().isClicked(screenX, screenY))
 				FtBird.gameMode = GameMode.MAIN_MENU;
@@ -56,13 +57,15 @@ public class Controller implements InputProcessor {
 				}
 				changeSkin();
 			}
-
 		} else if (FtBird.gameMode == GameMode.MENU) {
 			if (game.getPlayButton().isClicked(screenX, screenY)) {
 				FtBird.gameMode = GameMode.MAIN_MENU;
 				game.getFlappyBird().setDefault();
 				game.getPipeCollector().setDefault();
-			}
+			} else if (game.getScoreButton().isClicked(screenX, screenY))
+				FtBird.gameMode = GameMode.SCORE_MENU;
+		} else if (FtBird.gameMode == GameMode.SCORE_MENU) {
+			FtBird.gameMode = GameMode.MENU;
 		}
 		return true;
 	}

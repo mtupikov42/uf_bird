@@ -2,6 +2,7 @@ package com.unit.ft_bird.view;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.unit.ft_bird.controller.Controller;
@@ -35,6 +36,8 @@ public class FtBird extends ApplicationAdapter {
 								fbLogoImage,
 								scoreImage;
 	private BirdFont			font;
+	private Music die,
+								flapWings;
 	private SkinScroller		scroller;
 	public static GameMode		gameMode;
 	public static int			score = 0, maxScore;
@@ -47,6 +50,12 @@ public class FtBird extends ApplicationAdapter {
 		flappyBird = new Bird();
 		font = new BirdFont();
 		pipeCollector = new PipeCollector();
+		die = Gdx.audio.newMusic(Gdx.files.internal("data/sfx_die.wav"));
+		die.setVolume(0.7f);
+		die.setLooping(false);
+		flapWings = Gdx.audio.newMusic(Gdx.files.internal("data/sfx_wing.wav"));
+		flapWings.setVolume(0.7f);
+		flapWings.setLooping(false);
 		tap_tap = new Button(
 				"data/flappy_tap_tap.atlas",
 				Gdx.graphics.getWidth() / 3,
@@ -180,6 +189,10 @@ public class FtBird extends ApplicationAdapter {
 		gameMode = GameMode.MAIN_MENU;
 	}
 
+	public Music getFlapWings() {
+		return flapWings;
+	}
+
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -237,6 +250,7 @@ public class FtBird extends ApplicationAdapter {
 			gameMode = GameMode.GAMEOVER;
 			BirdDB.insertScore(score);
 			maxScore = BirdDB.getMax() / 2;
+			die.play();
 		}
 	}
 

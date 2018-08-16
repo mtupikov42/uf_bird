@@ -30,6 +30,7 @@ public class Controller implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (FtBird.gameMode == GameMode.GAME) {
 			game.getFlappyBird().onClick();
+			game.getFlapWings().play();
 		} else if (FtBird.gameMode == GameMode.MAIN_MENU) {
 			if (game.getSkinsButton().isClicked(screenX, screenY))
 				FtBird.gameMode = GameMode.CHOOSE_SKIN;
